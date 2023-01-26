@@ -54,7 +54,7 @@ include 'koneksi.php';
 			</div>
 		</div>
 
-		<div class="mt-3">
+		<div class="my-3">
 			<a href="./produk.php">
 				<button class="btn btn-success">+ Tambah Produk</button>
 			</a>
