@@ -35,9 +35,33 @@ include './layouts/header.php';
 				<!-- Small boxes (Stat box) -->
 				<div class="row">
 					<div class="col-xl-12">
-						<a href="./manipulasi_kategori.html">
-							<button class="btn btn-success">Tambah Kategori</button>
-						</a>
+						<!-- Large modal -->
+<button type="button" class="btn btn-success create" data-toggle="modal" data-target=".bd-example-modal-lg">Tambah Kategori</button>
+
+<div class="modal fade bd-example-modal-lg create" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Tambah Kategori</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Kategori</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Masukkan nama kategori">
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Tambah</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
 						<div class="card mt-4">
 
 							<div class="card-body">
@@ -55,12 +79,53 @@ include './layouts/header.php';
 												<td></td>
 												<td></td>
 												<td>
-													<button class="btn btn-info">
-														<i class="fa fa-cog"></i>
-													</button>
-													<button class="btn btn-danger">
-														<i class="fa fa-trash"></i>
-													</button>
+												<button type="button" class="btn btn-info" data-toggle="modal" data-target=".modalupdate"><i class="fa fa-cog"></i></button>
+
+<div class="modal fade modalupdate" tabindex="-1" role="dialog" aria-labelledby="myLargeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Ubah Kategori</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Kategori</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Ubah nama kategori">
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info">Ubah</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".modaldelete"><i class="fa fa-trash"></i></button>
+
+<div class="modal fade modaldelete" tabindex="-1" role="dialog" aria-labelledby="myLargeModal" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Hapus Kategori</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <p>Hapus Kategori ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger">Hapus</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
 												</td>
 											</tr>
 										</tbody>
