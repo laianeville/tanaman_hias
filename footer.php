@@ -73,7 +73,7 @@
 <script src="https://kit.fontawesome.com/a0f5cf7da9.js" crossorigin="anonymous"></script>
 
 
-<?php if ($id_page == 4) : ?>
+<?php if ($id_page == 4 || $title == 'Riwayat Transaksi') : ?>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>

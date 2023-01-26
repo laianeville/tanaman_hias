@@ -116,7 +116,7 @@ function getBulan($bln)
                 <?php if (isset($_SESSION['level'])) : ?>
                   <?php if ($_SESSION['level'] != 'Admin') : ?>
                     <li>
-                      <a class="dropdown-item" href="./profil.php">
+                      <a class="dropdown-item" href="./riwayat.php">
                         Riwayat Transaksi
                       </a>
                     </li>

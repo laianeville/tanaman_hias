@@ -50,11 +50,18 @@ if (isset($_POST["login"])) {
 			$_SESSION["id"] = $akun['id'];
 			$_SESSION["level"] = "Pelanggan";
 			$_SESSION["email"] = $akun['email'];
+			$_SESSION["nohp"] = $akun['nohp'];
+			$_SESSION["jeniskelamin"] = $akun['jeniskelamin'];
+			$_SESSION["nama"] = $akun['nama'];
+			$_SESSION["alamat"] = $akun['alamat'];
 			echo "<script> location ='index.php';</script>";
 		} elseif ($akun['level'] == "Admin") {
 			$_SESSION["id"] = $akun['id'];
 			$_SESSION["level"] = "Admin";
 			$_SESSION["email"] = $akun['email'];
+			$_SESSION["nohp"] = $akun['nohp'];
+			$_SESSION["jeniskelamin"] = $akun['jeniskelamin'];
+			$_SESSION["alamat"] = $akun['alamat'];
 			echo "<script> location ='admin/index.php';</script>";
 		}
 	} else {
