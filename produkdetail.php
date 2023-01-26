@@ -1,6 +1,10 @@
 <?php
-session_start();
+ob_start();
+
 include 'koneksi.php';
+if (!isset($_SESSION)) {
+	session_start();
+}
 ?>
 <?php
 $idproduk = $_GET["id"];
@@ -37,15 +41,21 @@ $id_page = null;
 								<h4 class="text-success" style="font-weight: bold;">Rp. <?= number_format($detail['harga']); ?></h4>
 
 								<div class="mt-4">
-									<form action="" method="post">
-										<label for="beli_produk" class="text-secondary">Beli Produk:</label>
-										<input type="number" name="jumlah" class="form-control" placeholder="Jumlah" min="0" required id="jumlah" style="height: 8vh;">
+									<?php if (isset($_SESSION['id'])) : ?>
+										<form action="" method="post">
+											<label for="beli_produk" class="text-secondary">Beli Produk:</label>
+											<input type="number" name="jumlah" class="form-control" placeholder="Jumlah" min="0" required id="jumlah" style="height: 8vh;">
 
-										<div class="mt-3">
-											<button class="px-5 btn btn-success" type="submit" style="height: 7vh;">
-												<i class="fa fa-shopping-bag" aria-hidden="true"></i> Beli
-											</button>
-									</form>
+											<div class="mt-3">
+												<button class="px-5 btn btn-success" type="submit" name="checkout" style="height: 7vh;">
+													<i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout
+												</button>
+										</form>
+									<?php else : ?>
+										<a href="./login.php">
+											<button class="btn btn-info" type="button" style="height: 7vh;">Login</button>
+										</a>
+									<?php endif; ?>
 									<a href="<?= $detail['video']; ?>" target="_blank">
 										<button class="btn btn-primary ms-2" type="button" style="height: 7vh;"><i class="fa fa-video-camera me-2" aria-hidden="true"></i>Lihat Video</button>
 									</a>
@@ -54,7 +64,6 @@ $id_page = null;
 
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -107,6 +116,28 @@ $id_page = null;
 		</div>
 	</div>
 </div>
+
+<?php
+
+if (isset($_POST['checkout'])) {
+	if (isset($_SESSION['id'])) {
+		$user_id = $_SESSION['id'];
+	}
+	$id_produk = $detail['idproduk'];
+	$jumlah = $_POST['jumlah'];
+	$voucher = 10000;
+	$total1 = $detail['harga'] * $jumlah;
+	$total2 = ($detail['harga'] * $jumlah) - $voucher;
+
+	if ($total1 >= 100000) {
+		mysqli_query($koneksi, "INSERT INTO transaksi(user_id, id_produk, jumlah, voucher, total) VALUES('$user_id', '$id_produk', '$jumlah', '$voucher', '$total2')");
+		header('Location: ./keranjang.php');
+	} elseif ($total1 < 100000) {
+		mysqli_query($koneksi, "INSERT INTO transaksi(user_id, id_produk, jumlah, voucher, total) VALUES('$user_id', '$id_produk', '$jumlah', '$voucher', '$total1')");
+		header('Location: ./keranjang.php');
+	}
+}
+?>
 
 <?php
 include 'footer.php';

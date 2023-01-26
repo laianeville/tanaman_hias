@@ -84,23 +84,64 @@ function getBulan($bln)
         <div class="navbar-nav ms-auto">
           <a href="./index.php" class="nav-item nav-link text-center mx-4" <?php if ($id_page == 1) : ?> style="color: #008000; border-bottom: 2px solid #008000;" <?php endif; ?>>Home</a>
           <a href="./produk.php" class="nav-item nav-link text-center mx-4" <?php if ($id_page == 2) : ?> style="color: #008000; border-bottom: 2px solid #008000;" <?php endif; ?>>Produk</a>
-          <a href="#" class="nav-item nav-link text-center mx-4">Kategori</a>
+          <li class="nav-item mx-4 dropdown">
+            <a class="nav-link text-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Kategori
+            </a>
+            <ul class="dropdown-menu w-10">
+              <?php foreach ($datakategori as $key => $value) : ?>
+                <li><a class="dropdown-item" href="list_kategori.php?id=<?= $value['idkategori']; ?>"><?= $value['judulkategori']; ?></a></li>
+              <?php endforeach ?>
+            </ul>
+          </li>
         </div>
 
         <div class="navbar-nav ms-auto text-center">
-          <a href="./keranjang.php" class="nav-item nav-link btn me-2" style="color: #008000;">
-            <i class="fa fa-cart-plus text-center me-xl-3" aria-hidden="true" style="font-size: 18px; <?php if ($id_page == 4) : ?> border-bottom: 2px solid #008000; <?php endif; ?>"></i>
-          </a>
-          <?php if ($id_page != 'auth1') : ?>
-            <a href="./login.php" class="nav-item nav-link btn text-light px-3 me-2 mb-3 mb-xl-0" style="background: #008000;">
-              Login
-            </a>
-          <?php endif; ?>
+          <?php if (isset($_SESSION['email'])) : ?>
+            <?php if ($_SESSION['level'] != 'Admin') : ?>
+              <a href="./keranjang.php" class="nav-item nav-link btn <?php if (isset($_SESSION['email'])) : ?> me-1 <?php else : ?> me-3 <?php endif; ?>" style="color: #008000;">
+                <i class="fa fa-cart-plus text-center" aria-hidden="true" style="font-size: 18px; <?php if ($id_page == 4) : ?> border-bottom: 2px solid #008000; <?php endif; ?>"></i>
+              </a>
+            <?php endif; ?>
+            <li class="nav-item mx-4 dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <?= $_SESSION['email']; ?>
+              </a>
+              <ul class="dropdown-menu w-10">
+                <li>
+                  <a class="dropdown-item" href="./profil.php">
+                    Profil
+                  </a>
+                </li>
+                <?php if (isset($_SESSION['level'])) : ?>
+                  <?php if ($_SESSION['level'] != 'Admin') : ?>
+                    <li>
+                      <a class="dropdown-item" href="./profil.php">
+                        Riwayat Transaksi
+                      </a>
+                    </li>
+                  <?php endif; ?>
+                <?php endif; ?>
+              </ul>
+            </li>
 
-          <?php if ($id_page != 'auth2') : ?>
-            <a href="./register.php" class="nav-item nav-link btn px-3" style="background: transparent; border: 1px solid #008000; color: #008000;">
-              Register
-            </a>
+            <form action="./logout.php" method="post">
+              <button class="btn btn-danger" type="submit">Logout</button>
+            </form>
+
+          <?php else : ?>
+            <?php if ($id_page != 'auth1') : ?>
+              <a href="./login.php" class="nav-item nav-link btn text-light px-3 me-2 mb-3 mb-xl-0" style="background: #008000;">
+                Login
+              </a>
+            <?php endif; ?>
+
+            <?php if ($id_page != 'auth2') : ?>
+              <a href="./register.php" class="nav-item nav-link btn px-3" style="background: transparent; border: 1px solid #008000; color: #008000;">
+                Register
+              </a>
+            <?php endif; ?>
+
           <?php endif; ?>
         </div>
       </div>

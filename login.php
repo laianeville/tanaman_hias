@@ -47,10 +47,14 @@ if (isset($_POST["login"])) {
 	if ($akunyangcocok == 1) {
 		$akun = $ambil->fetch_assoc();
 		if ($akun['level'] == "Pelanggan") {
+			$_SESSION["id"] = $akun['id'];
 			$_SESSION["level"] = "Pelanggan";
+			$_SESSION["email"] = $akun['email'];
 			echo "<script> location ='index.php';</script>";
 		} elseif ($akun['level'] == "Admin") {
+			$_SESSION["id"] = $akun['id'];
 			$_SESSION["level"] = "Admin";
+			$_SESSION["email"] = $akun['email'];
 			echo "<script> location ='admin/index.php';</script>";
 		}
 	} else {

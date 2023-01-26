@@ -81,7 +81,6 @@ $title = "Home";
 								<?= $hasilproduk['judulkategori']; ?>
 							</span>
 
-
 							<div class="d-flex justify-content-between align-items-center">
 								<h5 class="text-success mb-0">
 									Rp. <?= number_format($hasilproduk['harga']) ?>

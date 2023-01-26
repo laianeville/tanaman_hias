@@ -1,23 +1,45 @@
 <?php
 session_start();
-$id_page = 2;
-$title = 'Semua Produk';
 include 'koneksi.php';
-include 'header.php';
-if (!empty($_POST['keywordpencarian'])) {
-    $keywordpencarian = $_POST['keywordpencarian'];
-} else {
-    $keywordpencarian = "";
+
+$id_page = null;
+$title = 'Kategori';
+
+?>
+
+<?php include 'header.php';
+$kategori = $_GET["id"];
+
+$semuadata = array();
+$ambil = $koneksi->query("SELECT*FROM produk WHERE idkategori = '$kategori'");
+while ($datahasil = $ambil->fetch_assoc()) {
+    $semuadata[] = $datahasil;
 }
-error_reporting(0);
-ini_set('display_errors', 0);
+?>
+
+<?php
+$datakategori = array();
+$ambil = $koneksi->query("SELECT * FROM kategori");
+while ($tiap = $ambil->fetch_assoc()) {
+    $datakategori[] = $tiap;
+}
+?>
+<?php $am = $koneksi->query("SELECT * FROM kategori where idkategori='$kategori'");
+$pe = $am->fetch_assoc()
 ?>
 
 <section class="container-fluid" style="position: relative; top: 7em;">
-
     <div class="row">
-        <?php $ambil = $koneksi->query("SELECT * FROM produk LEFT JOIN kategori ON produk.idkategori=kategori.idkategori order by idproduk desc"); ?>
-        <?php while ($hasilproduk = $ambil->fetch_assoc()) { ?>
+        <div class="col-xl-12">
+            <h4 class="mb-4" style="font-weight: bold;">Kategori: <?php echo $pe["judulkategori"] ?></h4>
+            <?php if (empty($semuadata)) : ?>
+                <div class="alert alert-danger">Produk <strong><?php echo  $pe["judulkategori"] ?></strong> Kosong</div>
+            <?php endif ?>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <?php foreach ($semuadata as $key => $hasilproduk) : ?>
             <div class="col-xl-3 my-4 mt-xl-0">
                 <div class="card" style="border-radius: 0;">
                     <div class="card-body p-0">
@@ -35,10 +57,6 @@ ini_set('display_errors', 0);
                             </p>
                         </div>
 
-                        <span class="mb-1 d-inline-block text-primary" style="border-radius: 25px;">
-                            <?= $hasilproduk['judulkategori']; ?>
-                        </span>
-
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="text-success mb-0">
                                 Rp. <?= number_format($hasilproduk['harga']) ?>
@@ -50,7 +68,7 @@ ini_set('display_errors', 0);
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        <?php endforeach; ?>
     </div>
 </section>
 
