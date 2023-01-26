@@ -50,7 +50,7 @@ include 'koneksi.php';
 								<td><?= $fetch_data['jumlah']; ?></td>
 								<td>Rp. <?= number_format($fetch_data['total']); ?></td>
 								<td>
-									<a href="keranjanghapus.php?id=<?= $fetch_data['id']; ?>" class="btn btn-danger">
+									<a href="keranjanghapus.php?id=<?= $fetch_data['idtransaksi']; ?>" class="btn btn-danger">
 										<i class="fa fa-ban"></i>
 									</a>
 								</td>
@@ -103,7 +103,7 @@ include 'koneksi.php';
 
 if (isset($_POST['take'])) {
 	date_default_timezone_set('Asia/Jakarta');
-	$idtransaksi = time();
+	$notransaksi = time();
 	$resipengiriman = $_POST['resipengiriman'];
 	$alamatpengiriman = $_POST['alamatpengiriman'];
 	$tanggalbeli = date('Y-m-d', strtotime('now'));
@@ -112,7 +112,7 @@ if (isset($_POST['take'])) {
 		$id = $_SESSION['id'];
 	}
 
-	$sql = mysqli_query($koneksi, "UPDATE transaksi SET idtransaksi='$idtransaksi', resipengiriman='$resipengiriman', alamatpengiriman='$alamatpengiriman', tanggalbeli='$tanggalbeli', status='berhasil' WHERE user_id='$id' AND status='pending'");
+	$sql = mysqli_query($koneksi, "UPDATE transaksi SET notransaksi='$notransaksi', resipengiriman='$resipengiriman', alamatpengiriman='$alamatpengiriman', tanggalbeli='$tanggalbeli', status='berhasil' WHERE user_id='$id' AND status='pending'");
 
 	if ($sql) {
 		header('location: ./riwayat.php');

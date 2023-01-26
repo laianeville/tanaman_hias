@@ -3,6 +3,13 @@
 session_start();
 include '../koneksi.php';
 
+if (!isset($_SESSION['level'])) {
+    if ($_SESSION["level"] != 'Admin') {
+        echo "<script> alert('Anda belum login');</script>";
+        echo "<script> location ='../login.php';</script>";
+    }
+}
+
 $title = 'Dashboard';
 $id_page = 'admin1';
 
@@ -21,6 +28,9 @@ $jumlah_users = mysqli_query($koneksi, "SELECT COUNT(*) AS `count_users` FROM `a
 $res_cusers = mysqli_fetch_assoc($jumlah_users);
 
 // jumlah laporan
+$jumlah_laporan = mysqli_query($koneksi, "SELECT COUNT(*) AS `count_laporan` FROM `laporan`");
+$res_claporan = mysqli_fetch_assoc($jumlah_laporan);
+
 ?>
 
 
@@ -86,8 +96,8 @@ $res_cusers = mysqli_fetch_assoc($jumlah_users);
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>0</h3>
-                                <p>Laporan Penjualan</p>
+                                <h3><?= $res_claporan['count_laporan']; ?></h3>
+                                <p>Laporan</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>

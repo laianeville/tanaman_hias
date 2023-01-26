@@ -1,6 +1,14 @@
 <?php
 
 session_start();
+
+if (!isset($_SESSION['level'])) {
+	if ($_SESSION["level"] != 'Admin') {
+		echo "<script> alert('Anda belum login');</script>";
+		echo "<script> location ='../login.php';</script>";
+	}
+}
+
 include '../koneksi.php';
 
 $title = 'Akun Member';
@@ -43,25 +51,30 @@ include './layouts/header.php';
 												<th>No</th>
 												<th>Nama</th>
 												<th>Email</th>
+												<th>Jenis Kelamin</th>
 												<th>Telepon</th>
+												<th>Alamat</th>
 												<th>Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr style="white-space: nowrap;">
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>
-													<button class="btn btn-info">
-														<i class="fa fa-cog"></i>
-													</button>
-													<button class="btn btn-danger">
-														<i class="fa fa-trash"></i>
-													</button>
-												</td>
-											</tr>
+											<?php $no = 1; ?>
+											<?php $users = mysqli_query($koneksi, "SELECT * FROM akun WHERE level='Pelanggan'"); ?>
+											<?php while ($data = mysqli_fetch_assoc($users)) : ?>
+												<tr style="white-space: nowrap;">
+													<td><?= $no++; ?></td>
+													<td><?= $data['nama']; ?></td>
+													<td><?= $data['email']; ?></td>
+													<td><?= $data['jeniskelamin']; ?></td>
+													<td><?= $data['nohp']; ?></td>
+													<td><?= $data['alamat']; ?></td>
+													<td>
+														<a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ?')" href="delete_akun.php?id=<?= $data['id']; ?>" class="btn btn-danger">
+															<i class="fa fa-trash"></i>
+														</a>
+													</td>
+												</tr>
+											<?php endwhile; ?>
 										</tbody>
 									</table>
 								</div>

@@ -1,6 +1,12 @@
 <?php
 
 session_start();
+if (!isset($_SESSION['level'])) {
+	if ($_SESSION["level"] != 'Admin') {
+		echo "<script> alert('Anda belum login');</script>";
+		echo "<script> location ='../login.php';</script>";
+	}
+}
 include '../koneksi.php';
 
 $title = 'Transaksi';
@@ -40,29 +46,51 @@ include './layouts/header.php';
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table table-striped table-bordered" id="dataTable">
-										<thead class="table-primary">
+										<thead class="table-success">
 											<tr>
-												<th>No</th>
-												<th>Nama</th>
-												<th>Tanggal Transaksi</th>
-												<th>Total Transaksi</th>
-												<th>Status Belanja</th>
+												<th>No.</th>
+												<th>Email</th>
+												<th>Produk</th>
+												<th>Foto</th>
+												<th>Harga</th>
+												<th>Jumlah</th>
+												<th>Total</th>
+												<th>Status</th>
 												<th>Aksi</th>
 											</tr>
 										</thead>
+
 										<tbody>
-											<tr style="white-space: nowrap;">
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>
-													<button class="btn btn-danger">
-														<i class="fa fa-trash"></i>
-													</button>
-												</td>
-											</tr>
+											<?php $no = 1; ?>
+											<?php if (isset($_SESSION['id'])) {
+												$id = $_SESSION['id'];
+											} ?>
+											<?php $data = mysqli_query($koneksi, "SELECT * FROM transaksi INNER JOIN produk ON transaksi.id_produk=produk.idproduk INNER JOIN akun ON transaksi.user_id=akun.id"); ?>
+											<?php while ($fetch_data = mysqli_fetch_assoc($data)) : ?>
+												<tr>
+													<td><?= $no++; ?></td>
+													<td><?= $fetch_data['email']; ?></td>
+													<td><?= $fetch_data['namaproduk']; ?></td>
+													<td>
+														<img src="../foto/<?= $fetch_data['gambar']; ?>" class="rounded" width="50px" alt="">
+													</td>
+													<td>Rp. <?= number_format($fetch_data['harga']); ?></td>
+													<td><?= $fetch_data['jumlah']; ?></td>
+													<td>Rp. <?= number_format($fetch_data['total']); ?></td>
+													<td>
+														<?php if ($fetch_data['status'] == 'pending') : ?>
+															<span class="px-3 bg-warning" style="border-radius: 20px;"><?= $fetch_data['status']; ?></span>
+														<?php else : ?>
+															<span class="px-3 bg-success text-light" style="border-radius: 20px;"><?= $fetch_data['status']; ?></span>
+														<?php endif; ?>
+													</td>
+													<td>
+														<a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ?')" href="delete_transaksi.php?id=<?= $fetch_data['idtransaksi']; ?>" class="btn btn-danger">
+															<i class="fa fa-trash"></i>
+														</a>
+													</td>
+												</tr>
+											<?php endwhile; ?>
 										</tbody>
 									</table>
 								</div>

@@ -1,6 +1,15 @@
 <?php
 
+ob_start();
 session_start();
+
+if (!isset($_SESSION['level'])) {
+	if ($_SESSION["level"] != 'Admin') {
+		echo "<script> alert('Anda belum login');</script>";
+		echo "<script> location ='../login.php';</script>";
+	}
+}
+
 include '../koneksi.php';
 
 $title = 'Produk';
@@ -76,7 +85,7 @@ include './layouts/header.php';
 														<a href="./update_produk.php?id=<?= $datahasil['idproduk']; ?>" class="btn btn-info">
 															<i class="fa fa-cog"></i>
 														</a>
-														<a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ?')" href="hapus_produk?id=<?= $datahasil['idproduk']; ?>" class="btn btn-danger">
+														<a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ?')" href="delete_produk.php?id=<?= $datahasil['idproduk']; ?>" class="btn btn-danger">
 															<i class="fa fa-trash"></i>
 														</a>
 													</td>

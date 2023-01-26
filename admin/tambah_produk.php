@@ -2,6 +2,12 @@
 
 session_start();
 include '../koneksi.php';
+if (!isset($_SESSION['level'])) {
+    if ($_SESSION["level"] != 'Admin') {
+        echo "<script> alert('Anda belum login');</script>";
+        echo "<script> location ='../login.php';</script>";
+    }
+}
 
 $title = 'Tambah Produk';
 $id_page = null;

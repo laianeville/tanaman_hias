@@ -70,10 +70,10 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="./laporan.html" class="nav-link <?php if ($id_page == 'admin6') : ?> active <?php endif; ?>">
+                    <a href="./laporan.php" class="nav-link <?php if ($id_page == 'admin6') : ?> active <?php endif; ?>">
                         <i class="nav-icon fa fa-file"></i>
                         <p>
-                            Laporan Bulanan
+                            Laporan
                         </p>
                     </a>
                 </li>
